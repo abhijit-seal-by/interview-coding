@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FetchShiftDetailsImp implements FetchShiftDetails {
+public class ColleagueServiceImpl implements ColleagueService {
 
     List<Colleague> colleagues;
 
-    public FetchShiftDetailsImp(List<Colleague> colleagues) {
+    public ColleagueServiceImpl(List<Colleague> colleagues) {
         this.colleagues = colleagues;
     }
 

@@ -6,7 +6,7 @@ import com.interview.tesco.api.model.Colleague;
 
 import java.util.List;
 
-public interface FetchShiftDetails {
+public interface ColleagueService {
 
     Colleague findColleague(Colleague colleague) throws ColleagueNotFoundExceptions;
 

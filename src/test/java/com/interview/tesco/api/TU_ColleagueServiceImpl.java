@@ -12,43 +12,41 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class TU_FetchShiftDetailsImp {
+public class TU_ColleagueServiceImpl {
 
-    private FetchShiftDetails fetchShiftDetails;
+    private ColleagueService colleagueService;
 
     @Before
     public void initTest() {
-        fetchShiftDetails = new FetchShiftDetailsImp(buildColleagueData());
+        colleagueService = new ColleagueServiceImpl(buildColleagueData());
     }
 
     @Test
     public void testFindColleague() throws ColleagueNotFoundExceptions {
         Colleague colleague = new Colleague("Abhijit");
-        Colleague result = fetchShiftDetails.findColleague(colleague);
+        Colleague result = colleagueService.findColleague(colleague);
         Assert.assertTrue(result.getName().equals(colleague.getName()));
     }
 
     @Test(expected = ColleagueNotFoundExceptions.class)
     public void testFindColleagueWithException() throws ColleagueNotFoundExceptions {
         Colleague colleague = new Colleague("Arun");
-        fetchShiftDetails.findColleague(colleague);
+        colleagueService.findColleague(colleague);
     }
 
     @Test
-    public void testGetShiftTimingsForColleague() throws NoDepartmentAssociatedException {
+    public void testGetShiftTimingsForColleague() throws NoDepartmentAssociatedException, ColleagueNotFoundExceptions {
         Colleague searchColleauge = new Colleague("Abhijit");
-        searchColleauge.addDepartmentList(Department.CHECKOUT);
-        searchColleauge.addDepartmentList(Department.CHECKOUT1);
-        searchColleauge.addDepartmentList(Department.BAKERY);
-        searchColleauge.addDepartmentList(Department.DAIRY);
-        List<Integer> shiftTimings = fetchShiftDetails.getShiftTimingsForColleague(searchColleauge);
+        List<Integer> shiftTimings = colleagueService.getShiftTimingsForColleague(
+                colleagueService.findColleague(searchColleauge)
+        );
         Assert.assertTrue(shiftTimings.size() == 4);
     }
 
     @Test(expected = NoDepartmentAssociatedException.class)
     public void testGetShiftTimingsForColleagueWithException() throws NoDepartmentAssociatedException {
         Colleague searchColleauge = new Colleague("Abhijit");
-        fetchShiftDetails.getShiftTimingsForColleague(searchColleauge);
+        colleagueService.getShiftTimingsForColleague(searchColleauge);
     }
 
     private List<Colleague> buildColleagueData() {
